@@ -7,7 +7,7 @@ public class Rit extends Stap{
     public Rit(String name, double kilometers) {
         super(name);
         this.kilometers = kilometers;
-        gewicht = kilometers;
+        this.setGewicht(kilometers);
     }
 
     public double getKilometers() {

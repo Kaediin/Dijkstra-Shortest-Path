@@ -4,50 +4,62 @@ import java.util.*;
 
 public class Reis implements Comparable<Reis> {
 
-    private List<Stap> stappen;
+    private Stap startStap;
+    private Stap targetStap;
 
-    public Reis() {
+    public Reis(Stap startStap, Stap targetStap) {
+        this.startStap = startStap;
+        this.targetStap = targetStap;
     }
 
-    public Reis(List<Stap> stappen) {
-        this.stappen = stappen;
+    public Stap getStartStap() {
+        return startStap;
     }
 
-    public List<Stap> getStappen() {
-        return stappen;
+    public void setStartStap(Stap startStap) {
+        this.startStap = startStap;
     }
 
-    public void setStappen(List<Stap> stappen) {
-        this.stappen = stappen;
+    public Stap getTargetStap() {
+        return targetStap;
+    }
+
+    public void setTargetStap(Stap targetStap) {
+        this.targetStap = targetStap;
     }
 
     @Override
     public int compareTo(Reis reis) {
-        return this.getStappen().equals(reis.getStappen()) ? 1 : 0;
+        List<Stap> pathThis = this.compute();
+        List<Stap> pathReis2 = reis.compute();
+        double summedWeightThis, summedWeightReis2;
+        summedWeightThis = pathThis.stream().mapToDouble(Stap::getGewicht).sum();
+        summedWeightReis2 = pathReis2.stream().mapToDouble(Stap::getGewicht).sum();
+        return Double.compare(summedWeightReis2, summedWeightThis);
     }
 
-    public void compute(Stap startStap, Stap targetStap){
+    public List<Stap> compute(){
+        List<Stap> stappen = new ArrayList<>();
         Set<Stap> settledStappen = new HashSet<>();
         Set<Stap> unsettledStappen = new HashSet<>();
-        unsettledStappen.add(startStap);
+        unsettledStappen.add(this.getStartStap());
         while (unsettledStappen.size() != 0){
             Stap currentStap = getLowestDistanceStap(unsettledStappen);
             unsettledStappen.remove(currentStap);
             for (Stap stap: currentStap.getConnections()){
                 if (!settledStappen.contains(stap)){
-                    calculateMinimumDistance(stap, stap.gewicht, currentStap);
+                    calculateMinimumDistance(stap, stap.getGewicht(), currentStap);
                     unsettledStappen.add(stap);
                 }
             }
             settledStappen.add(currentStap);
-            if (currentStap == targetStap){
-                System.out.println("Computed route: ");
-                for (Stap stap : settledStappen){
-                    System.out.println(stap.getName());
-                }
-                return;
+            stappen.add(currentStap);
+
+            if (currentStap == this.getTargetStap()){
+                return stappen;
             }
         }
+        return stappen;
     }
 
     private Stap getLowestDistanceStap(Set<Stap> stappen){

@@ -6,7 +6,7 @@ import java.util.List;
 public class Stap {
 
     private String name;
-    public double gewicht;
+    private double gewicht;
     private List<Stap> connections;
     private LinkedList<Stap> shortestPath = new LinkedList<>();
 

@@ -7,7 +7,7 @@ public class Treinreis extends Stap {
     public Treinreis(String name, int minuten) {
         super(name);
         this.minuten = minuten;
-        gewicht = minuten;
+        this.setGewicht(minuten);
     }
 
     public Treinreis(int minuten) {

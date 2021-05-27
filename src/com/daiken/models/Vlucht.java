@@ -19,7 +19,7 @@ public class Vlucht extends Stap {
         super(name);
         this.kosten = kosten;
         this.kansOpBagageVerlies = kansOpBagageVerlies;
-        gewicht = this.getKosten();
+        this.setGewicht(this.getKosten()*this.kansOpBagageVerlies);
     }
 
 
