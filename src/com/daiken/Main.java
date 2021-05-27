@@ -50,9 +50,11 @@ public class Main {
         treinreizen.get(3).setConnections(Arrays.asList(treinreizen.get(2), treinreizen.get(0)));
         treinreizen.get(4).setConnections(Arrays.asList(treinreizen.get(3), treinreizen.get(2)));
 
-        Reis reis = new Reis();
-        reis.compute(vluchten.get(4), vluchten.get(0));
-        reis.compute(ritten.get(0), ritten.get(3));
-        reis.compute(treinreizen.get(1), treinreizen.get(0));
+        Reis reisVluchten = new Reis(vluchten.get(4), vluchten.get(0));
+        reisVluchten.compute();
+        Reis reisAutoritten = new Reis(ritten.get(0), ritten.get(3));
+        reisAutoritten.compute();
+        Reis reisTreinreizen = new Reis(treinreizen.get(1), treinreizen.get(0));
+        reisTreinreizen.compute();
     }
 }
